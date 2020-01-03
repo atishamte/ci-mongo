@@ -17,7 +17,7 @@ $config['mongo_db']['default']['return_as'] = 'array';
 $config['mongo_db']['default']['write_concerns'] = 1;
 $config['mongo_db']['default']['journal'] = TRUE;
 $config['mongo_db']['default']['read_preference'] = 'primary'; 
-$config['mongo_db']['default']['read_concern'] = 'default'; //'default', 'majority' or 'linearizable'
+$config['mongo_db']['default']['read_concern'] = 'local'; //'local', 'majority' or 'linearizable'
 $config['mongo_db']['default']['legacy_support'] = TRUE;
 /* End of file database.php */
 
