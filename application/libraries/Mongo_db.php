@@ -152,7 +152,7 @@ Class Mongo_db
 					$this->legacy_support = $this->config[$this->active]['legacy_support'];
 				}
 
-				if (empty($this->config[$this->active]['read_preference']) || !isset($this->config[$this->active]['read_preference']))
+				if (!isset($this->config[$this->active]['read_preference']) || empty($this->config[$this->active]['read_preference']))
 				{
 					$this->read_preference = MongoDB\Driver\ReadPreference::RP_PRIMARY;
 				}
@@ -161,7 +161,7 @@ Class Mongo_db
 					$this->read_preference = $this->config[$this->active]['read_preference'];
 				}
 
-				if (empty($this->config[$this->active]['read_concern']) || !isset($this->config[$this->active]['read_concern']))
+				if (!isset($this->config[$this->active]['read_concern']) || empty($this->config[$this->active]['read_concern']))
 				{
 					$this->read_concern = MongoDB\Driver\ReadConcern::MAJORITY;
 				}
@@ -208,7 +208,7 @@ Class Mongo_db
 		}
 		catch (MongoDB\Driver\Exception\Exception $e)
 		{
-			if (isset($this->debug) == true && $this->debug == true)
+			if ($this->debug)
 			{
 				exit('Unable to connect to MongoDB: ' . $e->getMessage());
 			}
@@ -275,7 +275,7 @@ Class Mongo_db
 
 			if ($writeConcernError = $result->getWriteConcernError())
 			{
-				if (isset($this->debug) == true && $this->debug == true)
+				if ($this->debug)
 				{
 					exit('WriteConcern failure : ' . $writeConcernError->getMessage());
 				}
@@ -287,7 +287,7 @@ Class Mongo_db
 		}
 		catch (MongoDB\Driver\Exception\Exception $e)
 		{
-			if (isset($this->debug) == true && $this->debug == true)
+			if ($this->debug)
 			{
 				exit('Insert of data into MongoDB failed: ' . $e->getMessage());
 			}
@@ -345,7 +345,7 @@ Class Mongo_db
 
 			if ($writeConcernError = $result->getWriteConcernError())
 			{
-				if (isset($this->debug) == true && $this->debug == true)
+				if ($this->debug)
 				{
 					exit('WriteConcern failure : ' . $writeConcernError->getMessage());
 				}
@@ -357,7 +357,7 @@ Class Mongo_db
 		}
 		catch (MongoDB\Driver\Exception\Exception $e)
 		{
-			if (isset($this->debug) == true && $this->debug == true)
+			if ($this->debug)
 			{
 				exit('Insert of data into MongoDB failed: ' . $e->getMessage());
 			}
@@ -423,6 +423,7 @@ Class Mongo_db
 	 * criteria.
 	 *
 	 * @usage : $this->mongo_db->where(array('field' => 'value'))->from('collection')->get()->result();
+	 * @usage : $this->mongo_db->where('field1', 'value1'))->where('field2', 'value2'))->from('collection')->get()->result();
 	 *
 	 * @param array|string $wheres
 	 * @param null|string  $value
@@ -587,12 +588,12 @@ Class Mongo_db
 	{
 		if (!isset($field))
 		{
-			exit('Mongo field is require to perform greater then query');
+			exit('Mongo field is require to perform greater than query');
 		}
 
 		if (!isset($value))
 		{
-			exit('Mongo field\'s value is require to perform greater then query');
+			exit('Mongo field\'s value is require to perform greater than query');
 		}
 
 		$this->_wheres($field);
@@ -616,12 +617,12 @@ Class Mongo_db
 	{
 		if (!isset($field))
 		{
-			exit('Mongo field is require to perform greater then or equal query');
+			exit('Mongo field is require to perform greater than or equal query');
 		}
 
 		if (!isset($value))
 		{
-			exit('Mongo field\'s value is require to perform greater then or equal query');
+			exit('Mongo field\'s value is require to perform greater than or equal query');
 		}
 
 		$this->_wheres($field);
@@ -645,12 +646,12 @@ Class Mongo_db
 	{
 		if (!isset($field))
 		{
-			exit('Mongo field is require to perform less then query');
+			exit('Mongo field is require to perform less than query');
 		}
 
 		if (!isset($value))
 		{
-			exit('Mongo field\'s value is require to perform less then query');
+			exit('Mongo field\'s value is require to perform less than query');
 		}
 
 		$this->_wheres($field);
@@ -674,12 +675,12 @@ Class Mongo_db
 	{
 		if (!isset($field))
 		{
-			exit('Mongo field is require to perform less then or equal to query');
+			exit('Mongo field is require to perform less than or equal to query');
 		}
 
 		if (!isset($value))
 		{
-			exit('Mongo field\'s value is require to perform less then or equal to query');
+			exit('Mongo field\'s value is require to perform less than or equal to query');
 		}
 
 		$this->_wheres($field);
@@ -704,17 +705,17 @@ Class Mongo_db
 	{
 		if (!isset($field))
 		{
-			exit('Mongo field is require to perform greater then or equal to query');
+			exit('Mongo field is require to perform greater than or equal to query');
 		}
 
 		if (!isset($lower))
 		{
-			exit('Mongo field\'s start value is require to perform greater then or equal to query');
+			exit('Mongo field\'s start value is require to perform greater than or equal to query');
 		}
 
 		if (!isset($upper))
 		{
-			exit('Mongo field\'s end value is require to perform greater then or equal to query');
+			exit('Mongo field\'s end value is require to perform greater than or equal to query');
 		}
 
 		$this->_wheres($field);
@@ -1305,7 +1306,7 @@ Class Mongo_db
 
 			if ($writeConcernError = $result->getWriteConcernError())
 			{
-				if (isset($this->debug) == true && $this->debug == true)
+				if ($this->debug)
 				{
 					exit('WriteConcern failure : ' . $writeConcernError->getMessage());
 				}
@@ -1317,7 +1318,7 @@ Class Mongo_db
 		}
 		catch (MongoDB\Driver\Exception\Exception $e)
 		{
-			if (isset($this->debug) == true && $this->debug == true)
+			if ($this->debug)
 			{
 				exit('Update of data into MongoDB failed: ' . $e->getMessage());
 			}
@@ -1375,7 +1376,7 @@ Class Mongo_db
 
 			if ($writeConcernError = $result->getWriteConcernError())
 			{
-				if (isset($this->debug) == true && $this->debug == true)
+				if ($this->debug)
 				{
 					exit('WriteConcern failure : ' . $writeConcernError->getMessage());
 				}
@@ -1387,7 +1388,7 @@ Class Mongo_db
 		}
 		catch (MongoDB\Driver\Exception\Exception $e)
 		{
-			if (isset($this->debug) == true && $this->debug == true)
+			if ($this->debug)
 			{
 				exit('Update of data into MongoDB failed: ' . $e->getMessage());
 			}
@@ -1434,7 +1435,7 @@ Class Mongo_db
 
 			if ($writeConcernError = $result->getWriteConcernError())
 			{
-				if (isset($this->debug) == true && $this->debug == true)
+				if ($this->debug)
 				{
 					exit('WriteConcern failure : ' . $writeConcernError->getMessage());
 				}
@@ -1446,7 +1447,7 @@ Class Mongo_db
 		}
 		catch (MongoDB\Driver\Exception\Exception $e)
 		{
-			if (isset($this->debug) == true && $this->debug == true)
+			if ($this->debug)
 			{
 				exit('Update of data into MongoDB failed: ' . $e->getMessage());
 			}
@@ -1493,7 +1494,7 @@ Class Mongo_db
 
 			if ($writeConcernError = $result->getWriteConcernError())
 			{
-				if (isset($this->debug) == true && $this->debug == true)
+				if ($this->debug)
 				{
 					exit('WriteConcern failure : ' . $writeConcernError->getMessage());
 				}
@@ -1505,7 +1506,7 @@ Class Mongo_db
 		}
 		catch (MongoDB\Driver\Exception\Exception $e)
 		{
-			if (isset($this->debug) == true && $this->debug == true)
+			if ($this->debug)
 			{
 				exit('Delete of data into MongoDB failed: ' . $e->getMessage());
 			}
@@ -1671,7 +1672,7 @@ Class Mongo_db
 		}
 		catch (MongoDB\Driver\Exception\Exception $e)
 		{
-			if (isset($this->debug) == true && $this->debug == true)
+			if ($this->debug)
 			{
 				exit('MongoDB query failed: ' . $e->getMessage());
 			}
@@ -1960,7 +1961,7 @@ Class Mongo_db
 		}
 		catch (MongoDB\Driver\Exception\Exception $e)
 		{
-			if (isset($this->debug) == true && $this->debug == true)
+			if ($this->debug)
 			{
 				exit('MongoDB query failed: ' . $e->getMessage());
 			}
